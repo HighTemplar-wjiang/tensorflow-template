@@ -232,7 +232,7 @@ class TFLearner(object):
         # test_input = np.expand_dims(self._data["test_input"], axis=2)
         # test_label = np.expand_dims(self._data["test_label"], axis=2)
 
-        # Initialize variables.
+        # Initialize variables if training from scratch.
         if init_flag is True:
             print("INFO: Variables initialized.")
             self._tfsess.run(tf.global_variables_initializer())
@@ -426,6 +426,7 @@ def main(argv):
         with open(config_file_path, "r") as f:
             config = json.load(f)
         # Parse configs.
+        test_flag = config["test_flag"]
         input_data_path = config["input_data_path"]
         label_data_path = config["label_data_path"]
         model_path = config["model_path"]
@@ -471,22 +472,21 @@ def main(argv):
     if test_flag and model_path == "":
         print("ERROR: Test model path required!")
 
-    with TFLearner(hyperparameters=hyperparameters) as cl:
+    with TFLearner(hyperparameters=hyperparameters) as tfl:
         # Load data.
-        cl.load_data(input_data_path, label_data_path)
+        tfl.load_data(input_data_path, label_data_path)
 
         # Not testing.
         if not test_flag:
             if model_path == "":
                 # Train from scratch.
-                cl.build_graph()
-                cl.train(num_epochs)
+                tfl.build_graph()
+                tfl.train(num_epochs)
             else:
                 # Restore model and continue training.
-                cl.restore(model_path, num_epoch=num_epochs)
+                tfl.restore(model_path, num_epoch=num_epochs)
         else:  # Testing
-            cl.restore(model_path, num_epoch=0)
-            test_result = cl.test_model(
+            test_result = tfl.test_model(
                 input_data_path=input_data_path, label_data_path=label_data_path, model_path=model_path)
             print(test_result)
 
