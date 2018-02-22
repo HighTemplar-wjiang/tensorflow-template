@@ -45,7 +45,7 @@ My template for Tensorflow project.
     python main.py config_file.conf
     ```
     2.2. File format  
-        Use JSON format, this will be interpreted to system call (see above). Model will be build w.r.t. to "hyperparameters".  
+        Use JSON format, the file will be interpreted to system call (see above). Model will be build w.r.t. to "hyperparameters".  
         E.g.,  
     ```
     Train a model from scratch: 
@@ -101,7 +101,7 @@ with TFLearner(hyperparameters) as tfl:
         model_path=model_path)
 ```  
 2. **Logging, and saving/restoring models**  
-While training, logs should be written by [Tensorflow Summary Writer](https://www.tensorflow.org/api_docs/python/tf/summary/FileWriter), and checkpoints should be stored by [Tensorflow Saver](https://www.tensorflow.org/api_docs/python/tf/train/Saver).  
+While training, logs should be written by [Tensorflow Summary Writer](https://www.tensorflow.org/api_docs/python/tf/summary/FileWriter), and checkpoints should be stored by [Tensorflow Saver](https://www.tensorflow.org/api_docs/python/tf/train/Saver).
 However, references to Tensors and Graphs will be lost, unless the [Tensor names are known](https://www.tensorflow.org/versions/r0.12/api_docs/python/framework/core_graph_data_structures), after restoring the [metagraph](https://www.tensorflow.org/api_guides/python/meta_graph). </br></br>
 To solve this issue, hyper-parameters are stored together with checkpoints, with file extension _.hyperparameters_. To restore hyper-parameters, use python build-in [pickle.load](https://docs.python.org/3/library/pickle.html) function (or JSON). Tensorflow Graph should be rebuild w.r.t. hyper-parameters **before** restoring the model.
 ```python
