@@ -378,9 +378,13 @@ class TFLearner(object):
                 {"accuracy": float, "loss": float}
         """
 
-        # TODO: Load test file.
+        # TODO: Load test data if indicated.
         if input_data_path is not None and label_data_path is not None:
             self.load_data(input_data_path, label_data_path, test_ratio=test_ratio)
+
+        # TODO: Restore model if indicated.
+        if model_path is not None:
+            self.restore(model_path, num_epoch=0)
 
         # TODO: Get test data, reshape if necessary.
         # test_input = np.expand_dims(self._data["test_input"], axis=2)
