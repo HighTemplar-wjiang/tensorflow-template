@@ -434,7 +434,6 @@ def main(argv):
         input_data_path = config["input_data_path"]
         label_data_path = config["label_data_path"]
         model_path = config["model_path"]
-        test_path = config["test_path"]
         num_epochs = int(config["epochs"])
         hyperparameters = config["hyperparameters"]
     else:
